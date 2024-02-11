@@ -26,7 +26,7 @@ def search(message):
     bot.send_message(message.chat.id, "Начинаю поиск")
     driver.get("https://umu.sibadi.org/WebApp/#/Rasp/List")
     time.sleep(2)
-    our_cell = driver.find_element(By.ID, "input-67")  # находим поле с вводом
+    our_cell = driver.find_element(By.XPATH, "/html/body/div/div[1]/div/div/main/div/div[4]/div/div/div[3]/div/div[2]/div/div/input")  # находим поле с вводом
     user_input = message.text  # перменная содержащая в себе текст из бота тг
     time.sleep(2)
     our_cell.send_keys(user_input)
