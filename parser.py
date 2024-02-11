@@ -10,6 +10,7 @@ import time
 bot = telebot.TeleBot('6715780052:AAHLF3BSwdfTIrOXfPlADPLJ5Qup6at5xr4')
 driver = webdriver.Chrome()
 
+
 @bot.message_handler(commands=['start'])
 def start(message):
     bot.send_message(message.chat.id, "Привет, я рад тебя видеть. У меня ты сможешь получить расписание своей группы.")
@@ -31,11 +32,13 @@ def search(message):
     time.sleep(2)
     our_cell.send_keys(user_input)
     time.sleep(3)
-    group = driver.find_element(By.CLASS_NAME, "text-start")  # поле с выводимыми группами
+    group = driver.find_element(By.CLASS_NAME "text-start")  # поле с выводимыми группами
     time.sleep(2)
     group.click()  # заходим на группу
-    time.sleep(7)
-    driver.quit()
+
+    full_page = driver.find_element(By.CSS_SELECTOR, "")
+    print(full_page)
+
 
 
 bot.polling()
