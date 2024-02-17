@@ -44,7 +44,6 @@ def search(message):
     r = requests.get('https://umu.sibadi.org/api/Rasp?idGroup=13688&sdate=2024-02-17').text
     data = json.loads(r)
 
-# Создадим словарь для хранения расписания по дням недели
     schedule_by_day = {}
 
     # Извлекаем нужные данные из словаря
