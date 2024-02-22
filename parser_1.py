@@ -63,15 +63,26 @@ def search(message):
     bot.send_message(message.chat.id, 'Расписание на этой неделе: \n')
     for day, schedule in schedule_by_day.items():
         bot.send_message(message.chat.id, f'{day}:')
+        
         for item in schedule:
-            # bot.send_message(message.chat.id, f'Предмет:, {item["предмет"]}')
-            # bot.send_message(message.chat.id, f'Преподаватель:, {item["преподаватель"]}')
-            str_1 = f'Предмет: {item["предмет"]}'
-            str_2 = f' Преподаватель: {item["преподаватель"]}'
+            str_1 = f'Предмет: {item["предмет"]}\n'
+            str_2 = f'Преподаватель: {item["преподаватель"]}'
             bot.send_message(message.chat.id, str_1 + str_2)
 
-        
-        #bot.send_message(message.chat.id, result)
+    ''' Подумать над тем, как отправлять сообщение пользователю в виде:
+                Понедельник:
+                    lesson
+                    lesson
+                    lesson
+                    ....
+                Вторник:
+                    lesson
+                    lesson
+                    lesson
+                    ....
+                ...
+                '''
+
 
 
 bot.polling()
