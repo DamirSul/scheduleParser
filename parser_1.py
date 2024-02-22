@@ -1,14 +1,15 @@
 import telebot
+import requests
+import json
+import time
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
-import time
 from bs4 import BeautifulSoup
-import requests
-import json
+from datetime import datetime
 
 bot = telebot.TeleBot('6715780052:AAHLF3BSwdfTIrOXfPlADPLJ5Qup6at5xr4')
 driver = webdriver.Chrome()
@@ -40,8 +41,10 @@ def search(message):
     group.click()  # заходим на группу
 
 
-    
-    r = requests.get('https://umu.sibadi.org/api/Rasp?idGroup=13688&sdate=2024-02-17').text
+    now_time = datetime.utcnow().strftime('%Y-%m-%d')
+    some_url = 'https://umu.sibadi.org/api/Rasp?idGroup=13688&sdate='
+    res_url = some_url + now_time
+    r = requests.get(res_url).text
     data = json.loads(r)
 
     schedule_by_day = {}
@@ -57,12 +60,15 @@ def search(message):
         schedule_by_day[day].append({"предмет": subject, "преподаватель": teacher})
 
     # Выводим результат
+    bot.send_message(message.chat.id, 'Расписание на этой неделе: \n')
     for day, schedule in schedule_by_day.items():
-        print(day + ":")
+        bot.send_message(message.chat.id, f'{day}:')
         for item in schedule:
-            print("Предмет:", item["предмет"])
-            print("Преподаватель:", item["преподаватель"])
-            print()
+            # bot.send_message(message.chat.id, f'Предмет:, {item["предмет"]}')
+            # bot.send_message(message.chat.id, f'Преподаватель:, {item["преподаватель"]}')
+            str_1 = f'Предмет: {item["предмет"]}'
+            str_2 = f' Преподаватель: {item["преподаватель"]}'
+            bot.send_message(message.chat.id, str_1 + str_2)
 
         
         #bot.send_message(message.chat.id, result)
